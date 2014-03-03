@@ -1,0 +1,43 @@
+apply plugin: 'java'
+apply plugin: 'jooq'
+
+sourceCompatibility = 1.7
+version = '1.0'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.github.ben-manes:gradle-jooq-plugin:0.6'
+        classpath 'mysql:mysql-connector-java:5.1.29'
+    }
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.jooq:jooq:3.1.0'
+    compile 'org.jooq:jooq-meta:3.1.0'
+    compile 'org.jooq:jooq-codegen:3.1.0'
+    compile 'mysql:mysql-connector-java:5.1.29'
+}
+
+jooq {
+    jdbc {
+        url 'jdbc:mysql://localhost:3306'
+        driver 'com.mysql.jdbc.Driver'
+        user 'root'
+    }
+    generator {
+        database {
+            name 'org.jooq.util.mysql.MySQLDatabase'
+            inputSchema 'mydb'
+            includes '.*'
+        }
+    }
+}
